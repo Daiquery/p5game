@@ -215,14 +215,17 @@ function spaceScreen(){
 
 	textSize(32);
 	text(`${rings}`, 10, 30);
+
 	
-	// if (rings < 0){
-	// 	screen = 0
-	// 	}
+	if (rings <= 0){
+		clear();
+		screen = 0
+		rings = 60;
+		}
 		
-	// if (hit){
-	// 	rings -= 30;
-	// }
+	if (hit){
+		rings = rings - 30;
+	}
 	
 	// if (beamHit){
 	// 	rings = 0;
