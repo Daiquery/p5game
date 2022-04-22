@@ -1,0 +1,30 @@
+.deathdiv {
+    width: auto;
+    margin: auto;
+    text-align: center;
+    font-family:Arial, Helvetica, sans-serif;
+    
+}
+
+.deathdiv h1 {
+    color:white;
+}
+
+.deathdiv button {
+    background-color: white;
+    font-size: 20px;
+    padding: 20px;
+}
+
+.deathdiv button:hover {
+    background-color: silver;
+    color:red;
+    font-size: 20px;
+    padding: 20px;
+}
+
+
+.deathdiv img {
+
+   max-width: 10%;
+}

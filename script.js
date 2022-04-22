@@ -160,43 +160,7 @@ function jumper() {
 	
 }
 
-function startTheGame(){
-  if (buttons) {
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].remove();
-    }
-  }
-  screen = 1;
-  if (buttons) {
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].remove();
-    }
-  }
-}
 
-function startScreen(){
-  background(coolEarthBackground);
-  button = createButton('Start Game')
-  button.mousePressed(startTheGame);
-  button.size(200,100);
-  button.position(10,10);
-  button.style("font-family", "Bodoni");
-  button.style("font-size", "48px");
-
-}
-
-function gameStart(){
-	background(255);
-	sleep(6000).then(() => {
-		transformGif = crushYouGif;
-	})
-
-  sleep(10000).then(() => {
-    screen = 2;
-  })
-
-	
-}
 
 function spaceScreen(){
 	clear();
@@ -220,7 +184,7 @@ function spaceScreen(){
 	if (rings <= 0){
 		clear();
 		screen = 0
-		rings = 60;
+		window.location.href = "pages/death.html"
 		}
 		
 	if (hit){
@@ -282,9 +246,7 @@ function spaceScreen(){
 		c_ring.y = random(0, h-50);
 
 	}
-  //call the show function in the player object
 
-  //call the update function in the player object
   if (player.y < h-50){
     player.update();
   }
@@ -304,22 +266,7 @@ function spaceScreen(){
 
 
 function draw() {
-  buttons = document.getElementsByTagName('button');
-
-	// let ms = millis()
-	
-	// if(ms > 10000 && ms < 10050){
-	// 	screen += 1;
-	// }
-
-	print(screen);
-	if(screen === 0){
-		 startScreen();		
-	} else if (screen === 1){
-		gameStart();
-	} else if (screen === 2){
-    spaceScreen();
-  }
+ spaceScreen();
 
 }
 
