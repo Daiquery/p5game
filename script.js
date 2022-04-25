@@ -2,12 +2,12 @@ let w = window.innerWidth;
 let h = window.innerHeight;
 //declare an object
 let player;
-let speed = 9;
+let speed = 15;
 let ringSpeed;
 let hit;
 let lives;
 let rings;
-let evilSpeed = 20;
+let evilSpeed = 25;
 let mc;
 let bg;
 let bad_thing;
@@ -57,6 +57,7 @@ function setup() {
 	a_ring = new ring();
 	b_ring = new ring();
 	c_ring = new ring();
+	d_ring = new ring();
 	beam = new evilBeam();
 	mc = loadImage(gifRun);							 
 
@@ -129,9 +130,9 @@ function jumper() {
 	this.width = 144;
 	this.height = 120;
   //apply the force of gravity
-  this.gravity = 10;
+  this.gravity = 15;
   //apply opposing force of gravity
-  this.lift = -20;
+  this.lift = -30;
   //current velocity of the jumper
   this.velocity = 0;
 
@@ -163,6 +164,7 @@ function jumper() {
 
 
 function spaceScreen(){
+
 	clear();
 	background(bg)
 	bbox.show();
@@ -170,17 +172,49 @@ function spaceScreen(){
 	a_ring.show();
 	b_ring.show();
 	c_ring.show();
+	d_ring.show();
 	// beam.show();
 	hit = collideRectRect(player.x, player.y, player.width, player.height, bbox.x,bbox.y,bbox.width,bbox.height)
 	aCollect = collideRectRect(player.x, player.y, player.width, player.height, a_ring.x,a_ring.y,a_ring.width,a_ring.height)
 	bCollect = collideRectRect(player.x, player.y, player.width, player.height, b_ring.x,b_ring.y,b_ring.width,b_ring.height)
 	cCollect = collideRectRect(player.x, player.y, player.width, player.height, c_ring.x,c_ring.y,c_ring.width,c_ring.height)
+	dCollect = collideRectRect(player.x, player.y, player.width, player.height, d_ring.x,d_ring.y,d_ring.width,d_ring.height)
+
 	// beamHit = collideRectRect(player.x, player.y, player.width, player.height, beam.x,beam.y,beam.width,beam.height)
 
-	textSize(32);
-	text(`${rings}`, 10, 30);
+	textSize(25);
+	fill(color('white'))
+	text(`Rings: ${rings}`, 10, 30);
 
+	if(rings < 100){
+	textSize(25);
+	fill(color('yellow'))
+	text(`Collect 100 Rings!`, (w/2) - 15, 30);
+
+	textSize(25);
+	fill(color('red'))
+	text(`Avoid Mecha Sonic`, (w/2) - 20, 60);
+
+	} else {
+	textSize(25);
+	fill(color('red'))
+	text(`Defeat Eggman`, (w/2) - 15, 30);
+
+	aCollect = null
+	bCollect = null
+	cCollect = null
+	dCollect = null
+	hit = null
+
+	ringSpeed = 0;
+	evilSpeed = 0;
+
+	bbox.y = a_ring.y = b_ring.y = c_ring.y = d_ring.y = h + 50000
+
+	}
 	
+
+
 	if (rings <= 0){
 		clear();
 		screen = 0
@@ -188,7 +222,7 @@ function spaceScreen(){
 		}
 		
 	if (hit){
-		rings = rings - 30;
+		rings = rings - 3;
 	}
 	
 	// if (beamHit){
@@ -196,20 +230,26 @@ function spaceScreen(){
 	// }
 	
 	if (aCollect){
-		rings += 1;
+		rings += 2;
 		a_ring.x = w - 50
 		a_ring.y = random(0, h-50);
 	}
 	if (bCollect){
-		rings += 1;
+		rings += 2;
 		b_ring.x = w - 30
 		b_ring.y = random(0, h-50);
 
 	}
 	if (cCollect){
-		rings += 1;
+		rings += 2;
 		c_ring.x = w - 10
 		c_ring.y = random(0, h-50);
+}
+
+if (dCollect){
+	rings += 2;
+	d_ring.x = w 
+	d_ring.y = random(0, h-50);
 }
 	
 	
@@ -218,13 +258,15 @@ function spaceScreen(){
 	a_ring.x -= ringSpeed;
 	b_ring.x -= ringSpeed;
 	c_ring.x -= ringSpeed;
+	d_ring.x -= ringSpeed;
+
 
 
 	
 	if(bbox.x < -30){
 		bbox.x = w - 70
 		bbox.y = random(0, h-50);
-		evilSpeed += 0.5
+		evilSpeed += 0.8
 
 
 	}
@@ -247,7 +289,7 @@ function spaceScreen(){
 
 	}
 
-  if (player.y < h-50){
+  if (player.y < h-100){
     player.update();
   }
   //if spacebar pressed, player jumps
