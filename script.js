@@ -23,6 +23,11 @@ let coolEarthBackground;
 let screen = 0;
 let init = false;
 let buttons;
+let bgm;
+let ringBling;
+let eggmanrobot;
+let eggmanrobot_damaged;
+let asteroidImage;
 
 window.addEventListener('keydown', (e) => {  
     e.preventDefault();  
@@ -41,7 +46,12 @@ function preload(){
 	gifRun = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ee3b0f1a-e6b7-4d10-b5bf-62ebd2637b7a/dej3qlf-f8e13033-8ba7-46e5-855b-9aebc7229893.gif?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2VlM2IwZjFhLWU2YjctNGQxMC1iNWJmLTYyZWJkMjYzN2I3YVwvZGVqM3FsZi1mOGUxMzAzMy04YmE3LTQ2ZTUtODU1Yi05YWViYzcyMjk4OTMuZ2lmIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.CFUzndt0E_HAjqqkDx5PwAu-vWJGZDIvhJcOag3jQ0k";
   coolEarthBackground = "https://media.istockphoto.com/photos/earth-planet-viewed-from-space-3d-render-of-planet-earth-picture-id1189556235?b=1&k=20&m=1189556235&s=170667a&w=0&h=pQPArYU1ZpYl02w6rf6wnWYI1kWTcqrYCqbZ76sDZpQ=";
 	gifJump = "https://c.tenor.com/GZBJyaDeJGQAAAAi/sonic-the-hegdehog-sonic.gif";
-	
+	bgm = loadSound('media/ddayzone.mp3')
+	ringBling = loadSound('media/ringbling.mp3')
+	eggmanrobot = loadImage('media/giganiga.png')
+	eggmanrobot_damaged = loadImage('media/giganiga.png')
+	asteroidImage = loadImage('media/asteroid.png');
+
 }
 
 function setup() {
@@ -58,8 +68,19 @@ function setup() {
 	b_ring = new ring();
 	c_ring = new ring();
 	d_ring = new ring();
+	asteroid1 = new asteroid();
+	asteroid2 = new asteroid();
+	asteroid3 = new asteroid();
+
 	beam = new evilBeam();
-	mc = loadImage(gifRun);							 
+	eggnigga = new eggrobo();
+	mc = loadImage(gifRun);
+	
+	bgm.loop();
+
+	bgm.stop();
+
+	bgm.play();
 
 
 }
@@ -109,6 +130,17 @@ function ring(){
 		image(ringGif, this.x, this.y, this.width, this.height);
 	}
 }
+
+function asteroid(){
+	this.x = w/2
+	this.y = h/2
+	this.width = 250
+	this.height = 191
+	this.show = function(){
+		image(asteroidImage, this.x, this.y, this.width, this.height);
+	}
+}
+
 
 function obstacle(){
 	this.x = w/2
@@ -161,6 +193,18 @@ function jumper() {
 	
 }
 
+function eggrobo(){
+	this.x = w/2
+	this.y = (h/2) + 100
+	this.width = 672
+	this.height = 448
+	this.image = eggmanrobot
+
+	this.show = function(){
+		image(this.image, this.x, this.y, this.width, this.height);
+	}
+}
+
 
 
 function spaceScreen(){
@@ -173,6 +217,8 @@ function spaceScreen(){
 	b_ring.show();
 	c_ring.show();
 	d_ring.show();
+	eggnigga.show();
+	asteroid1.show();
 	// beam.show();
 	hit = collideRectRect(player.x, player.y, player.width, player.height, bbox.x,bbox.y,bbox.width,bbox.height)
 	aCollect = collideRectRect(player.x, player.y, player.width, player.height, a_ring.x,a_ring.y,a_ring.width,a_ring.height)
@@ -233,23 +279,30 @@ function spaceScreen(){
 		rings += 2;
 		a_ring.x = w - 50
 		a_ring.y = random(0, h-50);
+		ringBling.play();
 	}
 	if (bCollect){
 		rings += 2;
 		b_ring.x = w - 30
-		b_ring.y = random(0, h-50);
+ 	b_ring.y = random(0, h-50);
+		ringBling.play();
+
 
 	}
 	if (cCollect){
 		rings += 2;
 		c_ring.x = w - 10
 		c_ring.y = random(0, h-50);
+		ringBling.play();
+
 }
 
 if (dCollect){
 	rings += 2;
 	d_ring.x = w 
 	d_ring.y = random(0, h-50);
+	ringBling.play();
+
 }
 	
 	
